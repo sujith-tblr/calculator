@@ -9,8 +9,11 @@
 	<h1>Simple Calculator</h1>
 <input id="field" type="button" value='0' name="Display" >
 
-
-<button class="C" name="button" value="" type="button" onclick="myFunction()">C</button>
+<br>
+<button name="button" value="(" type="button" onclick="add_digit('(')">(</button>
+<button name="button" value=")" type="button" onclick="expr(')')">)</button>
+<button name="button" value="" type="button" onclick="last_trim()">CE</button>
+<button name="button" value="" type="button" onclick="myFunction()">C</button>
 <br>
 <button name="button" value="9" type="button" onclick="add_digit('9')">9</button>
 <button name="button" value="8" type="button" onclick="add_digit('8')">8</button>
@@ -40,14 +43,18 @@
 var pre=document.Calculator.Display.value; 
 var x='0';
 var x1='0';
-var x2='0';
+var x2='';
 var y='0';
 var y1='+';
+var arr=[];
 function myFunction() 
 {
+ arr=[];
+ x2='';
 	pre='0';
 	document.Calculator.Display.value=pre;
-	y1='+';
+
+ 
 }
 function add_digit(digit)  
 {
@@ -74,36 +81,41 @@ function put_dot()
  }
  function expr (opr) {
 
- 	if(pre!='+' && pre!='-' && pre!='*' && pre!='/')
- 	{
+pre =document.Calculator.Display.value;
+if(pre!='+' && pre!='-' && pre!='*' && pre!='/' && pre!=')' )
+    arr.push(pre);
+
+    /*
  	x=pre;
- 	x1=opr;
+ 	x1=opr;  */
+
  	pre=opr;
+      arr.push(pre); 
  	 document.Calculator.Display.value = pre;
- }
 
-else
- {
-	y1=opr;
- 	 document.Calculator.Display.value = opr;
-
-
- }
- 
- 	 
+	 
  }
  function eql()
  {
+  if(pre!=')')
+  arr.push(pre);
 
 
- 	if(y1!='*' && y1!='/')
- 	{
-	x2=x+x1+'('+y1+pre+')';
+for (i = 0; i <arr.length; i++)
+	x2+=arr[i];
+
  	document.Calculator.Display.value = eval(x2);
+ arr=[];
+ x2='';
+ pre=document.Calculator.Display.value;
+
+ 	
  }
 
- else document.Calculator.Display.value = "Syntax Error";
- 	
+ function last_trim()
+ {
+  str=document.Calculator.Display.value;
+  document.Calculator.Display.value=str.substring(0, str.length-1)
  }
 </script>
 
