@@ -2,46 +2,109 @@
 <head>
 <title>Simple Calculator</title>
 <link rel="stylesheet" type="text/css" href="style.css">
-
 </head>
 <body>
-<h1>Simple Calculator</h1>
-<form> 
-<input id="field" type="text" value='0' >
+
+<form name="Calculator"> 
+	<h1>Simple Calculator</h1>
+<input id="field" type="button" value='0' name="Display" >
+
+
+<button class="C" name="button" value="" type="button" onclick="myFunction()">C</button>
 <br>
+<button name="button" value="9" type="button" onclick="add_digit('9')">9</button>
+<button name="button" value="8" type="button" onclick="add_digit('8')">8</button>
+<button name="button" value="7" type="button" onclick="add_digit('7')">7</button>
+<button name="button" value="/" type="button" onclick="expr('/')">/</button>
 <br>
-<p>
-<button id='btn' name="button" value="9" type="button" onclick="AddDigit('9')">9</button>
-<button id='btn' name="button" value="8" type="button" onclick="AddDigit('8')">8</button>
-<button id='btn' name="button" value="7" type="button" onclick="myFunction()">7</button>
-<button id='btn' name="button" value="/" type="button" onclick="myFunction()">/</button>
+<button name="button" value="6" type="button" onclick="add_digit('6')">6</button>
+<button name="button" value="5" type="button" onclick="add_digit('5')">5</button>
+<button name="button" value="4" type="button" onclick="add_digit('4')">4</button>
+<button name="button" value="*" type="button" onclick="expr('*')">*</button>
 <br>
-<button id='btn' name="button" value="6" type="button" onclick="myFunction()">6</button>
-<button id='btn' name="button" value="5" type="button" onclick="myFunction()">5</button>
-<button id='btn' name="button" value="4" type="button" onclick="myFunction()">4</button>
-<button id='btn' name="button" value="*" type="button" onclick="myFunction()">*</button>
+<button name="button" value="3" type="button" onclick="add_digit('3')">3</button>
+<button name="button" value="2" type="button" onclick="add_digit('2')">2</button>
+<button name="button" value="1" type="button" onclick="add_digit('1')">1</button>
+<button name="button" value="-" type="button" onclick="expr('-')">-</button>
 <br>
-<button id='btn' name="button" value="3" type="button" onclick="myFunction()">3</button>
-<button id='btn' name="button" value="2" type="button" onclick="myFunction()">2</button>
-<button id='btn' name="button" value="1" type="button" onclick="myFunction()">1</button>
-<button id='btn' name="button" value="-" type="button" onclick="myFunction()">-</button>
-<br>
-<button id='btn' name="button" value="0" type="button" onclick="myFunction()">0</button>
-<button id='btn' name="button" value="." type="button" onclick="myFunction()">.</button>
-<button id='btn' name="button" value="=" type="button" onclick="myFunction()">=</button>
-<button id='btn' name="button" value="+" type="button" onclick="myFunction()">+</button>
-<br>
-</p>
+<button name="button" value="0" type="button" onclick="add_digit('0')">0</button>
+<button name="button" value="." type="button" onclick="put_dot('8')">.</button>
+<button name="button" value="=" type="button" onclick="eql()">=</button>
+<button name="button" value="+" type="button" onclick="expr('+')">+</button>
+
 
 </form>
 
 </body>
 <script type="text/javascript">
-function AddDigit(dig)  
+var pre=document.Calculator.Display.value; 
+var x='0';
+var x1='0';
+var x2='0';
+var y='0';
+var y1='+';
+function myFunction() 
 {
-	var Current = dig;
-	document.Calculator.Display.value = Current;
+	pre='0';
+	document.Calculator.Display.value=pre;
+	y1='+';
 }
+function add_digit(digit)  
+{
+	if (    (pre == 0)
+              && (pre.indexOf(".") == -1) || (pre == '+') || (pre == '-')|| (pre == '*')|| (pre == '/')
+            )
+           { pre = digit;
+           } else
+           { pre = pre + digit;
+           };
+
+	document.Calculator.Display.value = pre;
+}
+
+function put_dot()               
+ {
+  if ( pre.indexOf(".") == -1 && pre.indexOf("/") == -1 &&pre.indexOf("*") == -1 &&pre.indexOf("-") == -1 &&pre.indexOf("+") == -1)
+         pre = pre + ".";
+
+     else if (pre.indexOf("/") == 0 || pre.indexOf("*") == 0 || pre.indexOf("-") == 0 || pre.indexOf("+") == 0)
+  pre = 0 + ".";
+     
+ document.Calculator.Display.value = pre;
+ }
+ function expr (opr) {
+
+ 	if(pre!='+' && pre!='-' && pre!='*' && pre!='/')
+ 	{
+ 	x=pre;
+ 	x1=opr;
+ 	pre=opr;
+ 	 document.Calculator.Display.value = pre;
+ }
+
+else
+ {
+	y1=opr;
+ 	 document.Calculator.Display.value = opr;
+
+
+ }
+ 
+ 	 
+ }
+ function eql()
+ {
+
+
+ 	if(y1!='*' && y1!='/')
+ 	{
+	x2=x+x1+'('+y1+pre+')';
+ 	document.Calculator.Display.value = eval(x2);
+ }
+
+ else document.Calculator.Display.value = "Syntax Error";
+ 	
+ }
 </script>
-http://www.anaesthetist.com/mnm/javascript/calc.htm
+
 </html>
