@@ -1,5 +1,4 @@
     $(document).ready(function() {
-
         //***********Creating title,h1 and form**********//
         $("head").append($("<title></title>").text("Calculator"));
         $("placeholder").append($("<h1></h1>").text("Simple Calculator"));
@@ -21,7 +20,7 @@
         createbutton('(', 'add_digit');
         createbutton(')', 'expr');
         createbutton('CE', 'last_trim');
-        createbutton('C', 'myFunction');
+        createbutton('C', 'reset');
         $("form").append("<br>");
         createbutton('+', 'expr');
         createbutton('-', 'expr');
@@ -32,7 +31,7 @@
         for (var i = 9; i >= 0; i--) {
             createbutton(i, 'add_digit');
             if (/6|2/.test(i))
-                $("form").append("<br>"); }
+            $("form").append("<br>"); }
 
         createbutton('.', 'put_dot');
         createbutton('=', 'eql');
@@ -50,15 +49,13 @@
     var pre = '0';
     var x2 = '';
     var arr = [];
-
     //***********Used to reset everything***********//
-    $(document).on('click', '.myFunction', function() {
+    $(document).on('click', '.reset', function() {
         arr = [];
         x2 = '';
         pre = '0';
         document.Calculator.Display.value = pre;
     });
-
     //***********Used to insert digits to the display area***********//
     $(document).on('click', '.add_digit', function() {
 
@@ -73,7 +70,6 @@
         };
         document.Calculator.Display.value = pre;
     }); 
-
     //***********Used for inserting decimal points***********//
     $(document).on('click', '.put_dot', function() {
 
@@ -82,37 +78,31 @@
 
         else if (pre.indexOf("/") == 0 || pre.indexOf("*") == 0 || pre.indexOf("-") == 0 || pre.indexOf("+") == 0)
             pre = 0 + ".";
-
-        document.Calculator.Display.value = pre;
+       document.Calculator.Display.value = pre;
     });
-
     //***********Used to insert operators to the display screen.***********//
     $(document).on('click', '.expr', function() {
         opr = this.value;
         pre = document.Calculator.Display.value;
         if (pre != '+' && pre != '-' && pre != '*' && pre != '/' && pre != ')')
-            arr.push(pre);
+        arr.push(pre);
         pre = opr;
         arr.push(pre);
         document.Calculator.Display.value = pre;
     });
-
     //***********Used for evaluating the expression***********//
     $(document).on('click', '.eql', function() {
         if (pre != ')')
             arr.push(pre);
 
         for (i = 0; i < arr.length; i++) {
-
             x2 += arr[i];
-
         }
         document.Calculator.Display.value = eval(x2);
         arr = [];
         x2 = '';
         pre = document.Calculator.Display.value;
     });
-
     //***********Used for backspacing***********//
     $(document).on('click', '.last_trim', function() {
         str = document.Calculator.Display.value;
