@@ -13,39 +13,32 @@
             name: 'Display',
             value: '0'
         }));
-
+        
         $("form").append("<br>");
+        var chars = ["(", ")", "CE", "C", "9", "8", "7", "/", "6", "5", "4", "*", "3", "2", "1", "-", "0", ".", "=", "+"];
+        var fctns = '';
+            //**********Creating Buttons*************//
+        for (var i = 0; i <20; i++) {
 
-        //**********Creating Buttons*************//
-        createbutton('(', 'add_digit');
-        createbutton(')', 'expr');
-        createbutton('CE', 'last_trim');
-        createbutton('C', 'reset');
-        $("form").append("<br>");
-        createbutton('+', 'expr');
-        createbutton('-', 'expr');
-        createbutton('*', 'expr');
-        createbutton('/', 'expr');
-        $("form").append("<br>");
+            if(/\d|\(/.test(chars[i]))fctns='add_digit';
+            else if (/\)|\+|-|\*|\//.test(chars[i]))fctns='expr';
+            else if(/=/.test(chars[i]))fctns="eql";
+            else if(/C/.test(chars[i]))fctns="reset";
+            else if(/CE/.test(chars[i]))fctns="last_trim";
+            else if(/\./.test(chars[i]))fctns="put_dot";
 
-        for (var i = 9; i >= 0; i--) {
-            createbutton(i, 'add_digit');
-            if (/6|2/.test(i))
-            $("form").append("<br>"); }
-
-        createbutton('.', 'put_dot');
-        createbutton('=', 'eql');
-        //*************************************//
-    });
-
-    function createbutton(x, fn) {
-        $("form").append($('<button>').attr({
+            $("form").append($('<button>').attr({
             name: 'button',
-            value: x,
+            value: chars[i],
             type: 'button',
-            class: fn
-        }).text(x));    }
-
+            class: fctns
+        }).text(chars[i]));  
+        
+           if (i%4==3)
+            $("form").append("<br>"); 
+                                    }
+       });
+     //*************************************//
     var pre = '0';
     var x2 = '';
     var arr = [];
@@ -58,16 +51,14 @@
     });
     //***********Used to insert digits to the display area***********//
     $(document).on('click', '.add_digit', function() {
-
         digit = this.value;
-
         if ((pre == 0) &&
             (pre.indexOf(".") == -1) || (pre == '+') || (pre == '-') || (pre == '*') || (pre == '/')
         ) {
             pre = digit;
         } else {
             pre = pre + digit;
-        };
+            };
         document.Calculator.Display.value = pre;
     }); 
     //***********Used for inserting decimal points***********//
@@ -94,10 +85,8 @@
     $(document).on('click', '.eql', function() {
         if (pre != ')')
             arr.push(pre);
-
         for (i = 0; i < arr.length; i++) {
-            x2 += arr[i];
-        }
+            x2 += arr[i];                 }
         document.Calculator.Display.value = eval(x2);
         arr = [];
         x2 = '';
